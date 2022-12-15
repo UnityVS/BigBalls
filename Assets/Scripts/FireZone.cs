@@ -5,6 +5,7 @@ public class FireZone : MonoBehaviour
 {
     List<Collider> _listOfColliderObjects = new List<Collider>();
     string _tagOfMainBox = "LevelBox";
+    [SerializeField] GameObject _effectBurn;
     private void Start()
     {
         Collider[] listOfColliderObjectsInScene;
@@ -21,6 +22,7 @@ public class FireZone : MonoBehaviour
     {
         if (_listOfColliderObjects.Contains(other))
         {
+            Instantiate(_effectBurn, other.transform.position, Quaternion.Euler(-90, 0, 0));
             _listOfColliderObjects.Remove(other);
             Destroy(other.gameObject);
         }
