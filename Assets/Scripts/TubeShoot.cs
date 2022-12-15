@@ -10,7 +10,13 @@ public class TubeShoot : MonoBehaviour
     [SerializeField] Transform _shootPoint;
     [SerializeField] float _forcePower = 20f;
     [SerializeField] float _shootPeriod = 2f;
+    [SerializeField] int _currentShootCount = 0;
+    [SerializeField] int _maxShootCount = 25;
     float _timer;
+    private void Start()
+    {
+        TaskManager.Instance.UpdateUIBallsCount(_currentShootCount, _maxShootCount);
+    }
     void Update()
     {
         _timer += Time.deltaTime;
@@ -26,9 +32,14 @@ public class TubeShoot : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Ball newBall = Instantiate(_ballPrefab, _shootPoint.position, Quaternion.identity);
-                newBall._rigidbody.AddForce(_shootPoint.forward * _forcePower, ForceMode.Impulse);
-                _timer = 0;
+                if (_currentShootCount != _maxShootCount)
+                {
+                    Ball newBall = Instantiate(_ballPrefab, _shootPoint.position, Quaternion.identity);
+                    newBall._rigidbody.AddForce(_shootPoint.forward * _forcePower, ForceMode.Impulse);
+                    _currentShootCount++;
+                    TaskManager.Instance.UpdateUIBallsCount(_currentShootCount, _maxShootCount);
+                    _timer = 0;
+                }
             }
         }
 
