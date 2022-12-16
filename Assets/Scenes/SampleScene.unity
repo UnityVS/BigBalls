@@ -1928,9 +1928,9 @@ MonoBehaviour:
     type: 3}
   _shootPoint: {fileID: 375771847}
   _forcePower: 1100
-  _shootPeriod: 1
+  _shootPeriod: 0.5
   _currentShootCount: 0
-  _maxShootCount: 15
+  _maxShootCount: 30
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
