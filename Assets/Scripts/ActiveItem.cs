@@ -9,12 +9,13 @@ public class ActiveItem : MonoBehaviour
     [SerializeField] SphereCollider _collider;
     public SphereCollider _trigger;
     [SerializeField] TextMeshProUGUI _textNumber;
-
+    [SerializeField] Animator _animator;
     [ContextMenu("IncreaseLevel")]
     public void IncreaseLevel()
     {
         _level++;
         SetLevel(_level);
+        _animator.SetTrigger("IncreasteLevel");
     }
     [ContextMenu("DecreaseLevel")]
     public void DecreaseLevel()
@@ -26,7 +27,7 @@ public class ActiveItem : MonoBehaviour
     {
         return _level;
     }
-    public void SetLevel(int level)
+    public virtual void SetLevel(int level)
     {
         _level = level;
         int number = (int)Mathf.Pow(2, _level + 1);

@@ -8,14 +8,17 @@ public class TubeShoot : MonoBehaviour
     [SerializeField] Vector2 _zClamp;
     [SerializeField] Ball _ballPrefab;
     [SerializeField] Transform _shootPoint;
+    [SerializeField] Transform _rayPrediction;
     [SerializeField] float _forcePower = 20f;
     [SerializeField] float _shootPeriod = 2f;
     [SerializeField] int _currentShootCount = 0;
     [SerializeField] int _maxShootCount = 25;
+    [SerializeField] LayerMask _layerMask;
     float _timer;
     private void Start()
     {
         TaskManager.Instance.UpdateUIBallsCount(_currentShootCount, _maxShootCount);
+        _rayPrediction.position = _shootPoint.position;
     }
     void Update()
     {
@@ -27,6 +30,12 @@ public class TubeShoot : MonoBehaviour
             Vector3 point = ray.GetPoint(_distance);
             Vector3 pointClamp = new Vector3(Mathf.Clamp(point.x, _xClamp.x, _xClamp.y), 0f, Mathf.Clamp(point.z, _zClamp.x, _zClamp.y));
             transform.rotation = Quaternion.LookRotation(pointClamp - transform.position);
+        }
+        Ray rayPrediciton = new Ray(_shootPoint.position, _rayPrediction.forward);
+        RaycastHit hit;
+        if (Physics.Raycast(rayPrediciton, out hit, 300, _layerMask, QueryTriggerInteraction.Ignore))
+        {
+            _rayPrediction.localScale = new Vector3(1, 1, hit.distance * 6);
         }
         if (_timer > _shootPeriod)
         {

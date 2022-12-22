@@ -17,9 +17,9 @@ public class BallMerge : MonoBehaviour
             {
                 if (other.attachedRigidbody.GetComponent<Ball>() is Ball otherBall && other != null)
                 {
-                    if (!otherBall.GetComponent<ActiveItem>()._trigger.GetComponent<BallMerge>()._alreadyEnter && other != null)
+                    if (!otherBall.GetComponent<ActiveItem>()._trigger.GetComponent<BallMerge>()._alreadyEnter && other != null && otherBall != null)
                     {
-                        if (_ball.GetCurrentLevel() == otherBall.GetCurrentLevel() && otherBall != null)
+                        if (_ball.GetCurrentLevel() == otherBall.GetCurrentLevel() && otherBall != null && otherBall != null)
                         {
                             _alreadyEnter = true;
                             Destroy(other.gameObject);
